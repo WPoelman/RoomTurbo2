@@ -17,8 +17,8 @@ class Room extends Model
         'owner_id'
     ];
 
-    public function user()
+    public function owner()
     {
-        return $this->belongsTo('App\User', 'id', 'owner_id');
+        return $this->belongsTo(User::class, 'owner_id', 'id');
     }
 }

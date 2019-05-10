@@ -28,9 +28,8 @@ class RoomController extends Controller
     {
         $rooms = Room::all();
 
-        //dd($rooms);
         foreach ($rooms as $room) {
-            $room['owner'] = DB::table('users')->where('id', $room['owner_id'])->value('name');
+            $room['owner'] = $room->owner->name;
         };
 
         return view("rooms.rooms", compact('rooms'));
@@ -79,7 +78,9 @@ class RoomController extends Controller
      */
     public function show(Room $room)
     {
-        $room['owner'] = DB::table('users')->where('id', $room['owner_id'])->value('name');
+
+        $room['owner'] = $room->owner->name;
+
         return view('rooms.show', compact('room'));
     }
 

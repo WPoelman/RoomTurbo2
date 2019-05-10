@@ -5,7 +5,7 @@
     <div class="col-md-8">
             <h4 class="title col-md-8 m-4"> Kamers van {{$owner->name}}</h4>
             @if (count($rooms) > 0)
-            <h6 class="title col-md-8 m-4"> U heeft op dit moment {{count($rooms)}} op RoomTurbo2 </h6>
+            <h6 class="title col-md-8 m-4"> Aantal kamers op Roomturbo2: {{count($rooms)}}</h6>
                 @foreach ($rooms as $room)
                     <div class="card mb-3">
                         <img class="card-img-top" src="..." alt="afbeelding -> todo">
@@ -34,7 +34,7 @@
             @endif
     </div>
 
-    <div class="col-md-3">
+    <div class="col-md-4">
         <div class="card mb-3">
             <div class="card-title"><h4 class="title m-3"> Account Informatie</h4></div>
                 <div class="card-body">
@@ -45,7 +45,7 @@
                     </ul>
                     <a class="btn btn-warning mt-4" href="">Gegevens aanpassen</a>
                     <a class="btn btn-info mt-4" href="">Wachtwoord resetten</a>
-                    <form action="/home/destroy" method="POST">
+                    <form action="/home" method="POST">
                         @csrf @method('DELETE')
                         <button class="btn btn-danger mt-4">Account verwijderen</button>
                     </form>

@@ -27,7 +27,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-
         // VERBETEREN, DIT IS ERG LELIJK
         $owner_id = Auth::id();
         $rooms = Room::where('owner_id', '=', $owner_id)->get();

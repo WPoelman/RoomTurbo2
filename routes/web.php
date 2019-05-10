@@ -17,4 +17,7 @@ Route::get('/about', 'PagesController@about');
 
 /* Resources (CRUD) */
 Route::resource('/rooms', 'RoomController');
-Route::resource('user', 'UserController');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

@@ -1,41 +1,41 @@
 @extends('layouts.layout')
 
-@section('title', 'RoomTurbo 2 | '. $single_room->title)
+@section('title', 'RoomTurbo 2 | '. $room->title)
 
 @section('content')
 <div class="row">
     <div class="col-9">
         <div class="card mb-3">
             <div class="card-body">
-                <h1 class="card-title">{{$single_room->title}}</h1>
-                <p class="card-text"><small class="text-muted">Geplaatst: {{substr($single_room->created_at, 0, 10)}} door {{$single_room->owner}}</small></p>
+                <h1 class="card-title">{{$room->title}}</h1>
+                <p class="card-text"><small class="text-muted">Geplaatst: {{substr($room->created_at, 0, 10)}} door {{$room->owner}}</small></p>
             </div>
             <div class="row">
                 <div class="col-sm-3">
                     <div class="card">
                         <div class="card-body">
-                            <p>Prijs: <strong>€{{$single_room->price}},-</strong> per maand</p>
+                            <p>Prijs: <strong>€{{$room->price}},-</strong> per maand</p>
                         </div>
                     </div>
                 </div>
                 <div class="col-sm-3">
                     <div class="card">
                         <div class="card-body">
-                            <p>Grootte: {{$single_room->size}}m<sup>2</sup></p>
+                            <p>Grootte: {{$room->size}}m<sup>2</sup></p>
                         </div>
                     </div>
                 </div>
                 <div class="col-sm-3">
                     <div class="card">
                         <div class="card-body">
-                            <p>Type: {{$single_room->type}}</p>
+                            <p>Type: {{$room->type}}</p>
                         </div>
                     </div>
                 </div>
                 <div class="col-sm-3">
                     <div class="card">
                         <div class="card-body">
-                            <p>Adres: {{$single_room->zip_code}}, {{$single_room->number}}</p>
+                            <p>Adres: {{$room->zip_code}}, {{$room->number}}</p>
                         </div>
                     </div>
                 </div>
@@ -47,17 +47,17 @@
                 <div class="col-sm-8">
                     <div class="card mb-3">
                         <div class="card-body">
-                            <p class="card-text">{{$single_room->description}}</p>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus voluptates labore magni commodi. Beatae eius quaerat, enim hic soluta alias at. Magnam omnis ullam, ipsam inventore vel accusantium odio reprehenderit?</p>
+                            <p class="card-text">{{$room->description}}</p>
                         </div>
                     </div>
                 </div>
 
                 <div class="col-sm-2">
                     <button type="button" class="btn btn-info">Stuur een bericht!</button>
+
+                    <a class="btn btn-warning mt-4" href="/rooms/{{$room->id}}/edit">Advertentie aanpassen</a>
                 </div>
             </div>
-
         </div>
     </div>
 

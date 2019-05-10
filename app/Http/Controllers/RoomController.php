@@ -3,9 +3,22 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Room;
+use App\User;
+use DB;
 
 class RoomController extends Controller
 {
+
+    /**
+    * Only allow logged in user to create, edit, delete, store, update.
+    * Guest are allowed to see all the rooms and the single room pages.
+    */
+    public function __construct()
+    {
+        $this->middleware('auth')->except(['index', 'show']);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +26,12 @@ class RoomController extends Controller
      */
     public function index()
     {
-        $rooms = \App\Room::all();
+        $rooms = Room::all();
+
+        //dd($rooms);
+        foreach ($rooms as $room) {
+            $room['owner'] = DB::table('users')->where('id', $room['owner_id'])->value('name');
+        };
 
         return view("rooms.rooms", compact('rooms'));
     }
@@ -39,17 +57,16 @@ class RoomController extends Controller
         // validate data
         $validated = $request->validate([
             'title'         => 'required',
-            'owner'         => 'required',
             'description'   => 'required',
-            'size'          => 'required',
-            'price'         => 'required',
+            'size'          => 'required|integer',
+            'price'         => 'required|integer',
             'type'          => 'required',
-            'zip_code'      => 'required',
-            'number'        => 'required'
+            'zip_code'      => 'required|max:7',
+            'number'        => 'required|max:10'
         ]);
 
         // store data
-        \App\Room::create($validated);
+        Room::create($validated + ['owner_id' => auth()->id()]);
 
         return redirect('/rooms')->with('success', 'Kamer is toegevoegd.');
     }
@@ -60,10 +77,10 @@ class RoomController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Room $room)
     {
-        $single_room =  \App\Room::find($id);
-        return view('rooms.show', compact('single_room'));
+        $room['owner'] = DB::table('users')->where('id', $room['owner_id'])->value('name');
+        return view('rooms.show', compact('room'));
     }
 
     /**
@@ -72,12 +89,14 @@ class RoomController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+
+     // todo check hoe custom Room instance error meegegeven kan worden
+    public function edit(Room $room)
     {
-        if (!$room_info = \App\Room::find($id)){
+        if (!$room){
             return redirect('/rooms')->with('error', 'Kamer niet gevonden of niet geautoriseerd! Log in of zoek op het goede kamer nummer.');
         }
-        return view('rooms.edit', compact('room_info'));
+        return view('rooms.edit', compact('room'));
     }
 
     /**
@@ -87,10 +106,8 @@ class RoomController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Room $room)
     {
-        $room = \App\Room::find($id);
-
         $room->update(request([
             'title',
             'owner',
@@ -113,7 +130,7 @@ class RoomController extends Controller
      */
     public function destroy($id)
     {
-        \App\Room::findOrFail($id)->delete();
+        Room::findOrFail($id)->delete();
         return redirect("/rooms")->with('success', 'Kamer is verwijderd!');
     }
 }

@@ -14,6 +14,11 @@ class Room extends Model
         'type',
         'zip_code',
         'number',
-        'owner'
+        'owner_id'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo('App\User', 'id', 'owner_id');
+    }
 }

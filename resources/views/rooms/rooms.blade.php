@@ -15,7 +15,7 @@
                         <div class="col-md-10">
                             <h5 class="card-title"><a href="/rooms/{{$room->id}}">{{$room->title}}</a></h5>
                             <p class="card-text">{{$room->description}}</p>
-                            <p class="card-text"><small class="text-muted">Geplaatst: {{substr($room->created_at, 0, 10)}}</small></p>
+                            <p class="card-text"><small class="text-muted">Geplaatst: {{substr($room->created_at, 0, 10)}} door {{$room->owner}}</small></p>
                         </div>
                         <div class="col-md-2">
                             <h2 class="title">€{{$room->price}}</h2>

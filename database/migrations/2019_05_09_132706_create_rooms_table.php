@@ -15,7 +15,7 @@ class CreateRoomsTable extends Migration
     {
         Schema::create('rooms', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('owner', 100);
+            $table->unsignedBigInteger('owner_id');
             $table->string('title', 255);
             $table->text('description');
             $table->integer('size');
@@ -24,6 +24,8 @@ class CreateRoomsTable extends Migration
             $table->string('zip_code', 6);
             $table->string('number', 6);
             $table->timestamps();
+
+            $table->foreign('owner_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

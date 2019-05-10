@@ -58,13 +58,6 @@
                 </div>
             </div>
 
-            <div class="form-group row alert">
-                    <label for="inputOwner" class="col-sm-2 col-form-label">TIJDELIJK OWNER MOET UIT SESSION KOMEN</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="inputOwner" name="owner" value="{{ old('owner') }}">
-                    </div>
-                </div>
-
             <div class="form-group row">
                 <label for="inputPicture" class="col-sm-2 col-form-label">Afbeelding toevoegen</label>
                 <div class="col-sm-8">

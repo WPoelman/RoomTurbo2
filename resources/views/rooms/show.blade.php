@@ -53,9 +53,11 @@
                 </div>
 
                 <div class="col-sm-2">
-                    <button type="button" class="btn btn-info">Stuur een bericht!</button>
+                    <button type="button" class="btn btn-info @guest disabled @endguest ">Stuur een bericht!</button>
+                    @guest <small> Log in om een bericht te sturen.</small> @endguest
 
-                    <a class="btn btn-warning mt-4" href="/rooms/{{$room->id}}/edit">Advertentie aanpassen</a>
+                    @if(Auth::id() == $room['owner_id']) <a class="btn btn-warning mt-4" href="/rooms/{{$room->id}}/edit">Advertentie aanpassen</a>
+                    @endif
                 </div>
             </div>
         </div>

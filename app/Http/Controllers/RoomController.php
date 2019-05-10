@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Room;
 use App\User;
 use DB;
+use Auth;
 
 class RoomController extends Controller
 {
@@ -55,17 +56,17 @@ class RoomController extends Controller
     {
         // validate data
         $validated = $request->validate([
-            'title'         => 'required',
+            'title'         => 'required|max:255',
             'description'   => 'required',
-            'size'          => 'required|integer',
-            'price'         => 'required|integer',
-            'type'          => 'required',
+            'size'          => 'required|integer|max:5000',
+            'price'         => 'required|integer|max:20000',
+            'type'          => 'required|max:255',
             'zip_code'      => 'required|max:7',
             'number'        => 'required|max:10'
         ]);
 
         // store data
-        Room::create($validated + ['owner_id' => auth()->id()]);
+        Room::create($validated + ['owner_id' => Auth::id()]);
 
         return redirect('/rooms')->with('success', 'Kamer is toegevoegd.');
     }
@@ -109,16 +110,18 @@ class RoomController extends Controller
      */
     public function update(Request $request, Room $room)
     {
-        $room->update(request([
-            'title',
-            'owner',
-            'description',
-            'size',
-            'price',
-            'type',
-            'zip_code',
-            'number'
-        ]));
+
+        $validated = $request->validate([
+            'title'         => 'required|max:255',
+            'description'   => 'required',
+            'size'          => 'required|integer|max:5000',
+            'price'         => 'required|integer|max:20000',
+            'type'          => 'required|max:255',
+            'zip_code'      => 'required|max:7',
+            'number'        => 'required|max:10'
+        ]);
+
+        $room->update($validated);
 
         return redirect("/rooms")->with('success', 'Kamer is aangepast.');
     }

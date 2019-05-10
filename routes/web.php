@@ -20,4 +20,5 @@ Route::resource('/rooms', 'RoomController');
 
 Auth::routes();
 
+Route::delete('/home/destroy', 'UserInfoController@destroy');
 Route::get('/home', 'HomeController@index')->name('home');

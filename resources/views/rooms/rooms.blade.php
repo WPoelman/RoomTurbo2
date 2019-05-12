@@ -25,7 +25,7 @@
             </div>
             @endforeach
         @else
-            <p> No rooms found in the database. </p>
+            <p> Geen kamers gevonden! </p>
         @endif
     </div>
 

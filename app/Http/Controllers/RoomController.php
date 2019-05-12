@@ -3,10 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Room;
-use App\User;
-use DB;
-use Auth;
+use App\Room, App\User, DB, Auth;
 
 class RoomController extends Controller
 {
@@ -91,10 +88,9 @@ class RoomController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-
-     // todo check hoe custom Room instance error meegegeven kan worden
     public function edit(Room $room)
     {
+        // todo check hoe show Room instance error meegegeven kan worden
         if (!$room){
             return redirect('/rooms')->with('error', 'Kamer niet gevonden of niet geautoriseerd! Log in of zoek op het goede kamer nummer.');
         }

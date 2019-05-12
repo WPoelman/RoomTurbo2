@@ -21,5 +21,5 @@ Auth::routes();
 
 /* User Dashboard */
 Route::get('/home', 'HomeController@index')->name('home');
-Route::delete('/home', 'UserInfoController@destroy');
+Route::delete('/home', 'HomeController@destroy');
 

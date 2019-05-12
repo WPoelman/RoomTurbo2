@@ -27,10 +27,22 @@ class HomeController extends Controller
      */
     public function index()
     {
-        // VERBETEREN, DIT IS ERG LELIJK
         $owner_id = Auth::id();
         $rooms = Room::where('owner_id', '=', $owner_id)->get();
-        $owner = DB::table('users')->find($owner_id);
+        $owner = User::findOrFail($owner_id);
         return view('auth.home', compact('rooms', 'owner'));
+    }
+
+    /**
+     * Remove the logged in user from storage.
+     *
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy()
+    {
+        User::findOrFail(Auth::user()->id)->delete();
+        Auth::logout();
+        return redirect("/rooms")->with('success', 'Account is verwijderd.');
     }
 }

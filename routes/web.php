@@ -17,9 +17,9 @@ Route::get('/about', 'PagesController@about');
 
 /* Resources (CRUD) */
 Route::resource('/rooms', 'RoomController');
-
 Auth::routes();
 
+/* User Dashboard */
 Route::get('/home', 'HomeController@index')->name('home');
 Route::delete('/home', 'UserInfoController@destroy');
 

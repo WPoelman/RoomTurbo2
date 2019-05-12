@@ -27,7 +27,7 @@ class RoomController extends Controller
      */
     public function index()
     {
-        $rooms = Room::all();
+        $rooms = Room::all()->sortByDesc('created_at');
 
         foreach ($rooms as $room) {
             $room['owner'] = $room->owner->name;

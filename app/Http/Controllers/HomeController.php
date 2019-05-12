@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use \App\Room;
 use \App\User;
-use Auth;
-use DB;
+use Auth, DB;
 
 class HomeController extends Controller
 {
@@ -33,6 +33,45 @@ class HomeController extends Controller
         return view('auth.home', compact('rooms', 'owner'));
     }
 
+        /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+     public function edit()
+     {
+         if (! $user_id = Auth::id() ){
+             return redirect('/')->with('error', 'Niet ingelogd!');
+         }
+
+         $user = User::find($user_id)->only('name', 'email');
+
+         return view('auth.edit', compact('user'));
+     }
+
+     /**
+      * Update the specified resource in storage.
+      *
+      * @param  \Illuminate\Http\Request  $request
+      * @param  int  $id
+      * @return \Illuminate\Http\Response
+      */
+     public function update(Request $request)
+     {
+         $user_id = Auth::id();
+
+         $validated = $request->validate([
+            'name'      => ['required', 'string', 'max:255'],
+            'email'     => ['required', 'string', 'email', 'max:255',
+                            Rule::unique('users')->ignore($user_id)]
+         ]);
+
+         User::find($user_id)->update($validated);
+
+         return redirect("/home")->with('success', 'Account is aangepast.');
+     }
+
     /**
      * Remove the logged in user from storage.
      *
@@ -44,5 +83,17 @@ class HomeController extends Controller
         User::findOrFail(Auth::user()->id)->delete();
         Auth::logout();
         return redirect("/rooms")->with('success', 'Account is verwijderd.');
+    }
+
+    /**
+     * Log out the user and redirect to the reset password page.
+     *
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function password()
+    {
+        Auth::logout();
+        return redirect("/password/reset");
     }
 }

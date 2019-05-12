@@ -42,15 +42,16 @@
                         <li class="list-group-item">Naam: {{$owner->name}}</li>
                         <li class="list-group-item">Email: {{$owner->email}}</li>
                         <li class="list-group-item">Account aangemaakt op: {{substr($owner->created_at, 0, 10)}}</li>
+                        <li class="list-group-item">Type Account: {{$owner->role}}</li>
                     </ul>
-                    <a class="btn btn-warning mt-4" href="">Gegevens aanpassen</a>
-                    <a class="btn btn-info mt-4" href="">Wachtwoord resetten</a>
+                    <a class="btn btn-warning mt-4" href="/home/edit">Gegevens aanpassen</a>
+                    <a class="btn btn-info mt-4" href="/home/password"> Wachtwoord resetten</a>
                     <form action="/home" method="POST">
                         @csrf @method('DELETE')
                         <button class="btn btn-danger mt-4">Account verwijderen</button>
                     </form>
                 </div>
             </div>
-            </div>
+        </div>
     </div>
 @endsection

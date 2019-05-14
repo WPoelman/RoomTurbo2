@@ -9,6 +9,8 @@ class PagesController extends Controller
 {
     /**
      * Homepagina van de hele site.
+     *
+     * @return \Illuminate\Http\Response
      */
     public function index(){
 
@@ -22,7 +24,14 @@ class PagesController extends Controller
         return view('pages.index', compact('rooms'));
     }
 
+    /**
+     * Display The about page.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function about(){
+
         return view('pages.about');
+
     }
 }

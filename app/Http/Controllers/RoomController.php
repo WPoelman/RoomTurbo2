@@ -62,7 +62,7 @@ class RoomController extends Controller
             'number'        => 'required|max:10'
         ]);
 
-        // store data
+        // store data with id of user that created the room
         Room::create($validated + ['owner_id' => Auth::id()]);
 
         return redirect('/rooms')->with('success', 'Kamer is toegevoegd.');

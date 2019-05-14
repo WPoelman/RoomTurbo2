@@ -23,6 +23,7 @@ class CreateRoomsTable extends Migration
             $table->string('type', 255);
             $table->string('zip_code', 6);
             $table->string('number', 6);
+            $table->string('image');
             $table->timestamps();
 
             $table->foreign('owner_id')->references('id')->on('users')->onDelete('cascade');

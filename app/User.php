@@ -37,6 +37,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    /**
+     * An owner can own many rooms, a room has one owner
+     *
+     * @var array
+     */
     public function rooms()
     {
         return $this->hasMany(Room::class, 'owner_id');

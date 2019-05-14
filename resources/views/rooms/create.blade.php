@@ -6,7 +6,7 @@
 <div class="row">
     <h1 class="title"> Kamer toevoegen </h1>
     <div class="col-md-9 mt-5 card p-3">
-        <form method="POST" action="/rooms">
+        <form method="POST" action="/rooms" enctype="multipart/form-data">
 
             @csrf
 

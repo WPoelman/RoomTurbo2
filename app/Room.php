@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Room extends Model
 {
+    # characteristics of a room that can be filled in
     protected $fillable = [
         'title',
         'description',
@@ -17,6 +18,11 @@ class Room extends Model
         'owner_id'
     ];
 
+    /**
+     * A room has one owner, an owner can have many rooms
+     *
+     * @return user collection
+     */
     public function owner()
     {
         return $this->belongsTo(User::class, 'owner_id', 'id');

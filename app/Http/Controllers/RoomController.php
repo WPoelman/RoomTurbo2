@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\UploadPictureRequest;
 use App\Room, App\User, DB, Auth;
 
 class RoomController extends Controller
@@ -30,6 +31,7 @@ class RoomController extends Controller
             $room['owner'] = $room->owner->name;
         };
 
+        // hier nog iets van pagination toevoegen
         return view("rooms.rooms", compact('rooms'));
     }
 
@@ -94,6 +96,7 @@ class RoomController extends Controller
         if (!$room){
             return redirect('/rooms')->with('error', 'Kamer niet gevonden of niet geautoriseerd! Log in of zoek op het goede kamer nummer.');
         }
+
         return view('rooms.edit', compact('room'));
     }
 
@@ -104,8 +107,10 @@ class RoomController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Room $room)
+    public function update(Request $request, Room $room, UploadPictureRequest $pictures)
     {
+
+        dd($pictures);
 
         $validated = $request->validate([
             'title'         => 'required|max:255',
@@ -130,7 +135,9 @@ class RoomController extends Controller
      */
     public function destroy($id)
     {
+
         Room::findOrFail($id)->delete();
+
         return redirect("/rooms")->with('success', 'Kamer is verwijderd!');
     }
 }

@@ -6,7 +6,7 @@
 <div class="row">
     <h1 class="title"> Kamer Aanpassen </h1>
     <div class="col-md-9 mt-5 card p-3">
-        <form method="POST" action="/rooms/{{ $room->id }}">
+        <form method="POST" action="/rooms/{{ $room->id }}" enctype="multipart/form-data">
 
             @method('PATCH') @csrf
 
@@ -61,7 +61,7 @@
             <div class="form-group row">
                 <label for="inputPicture" class="col-sm-2 col-form-label">Afbeelding toevoegen</label>
                 <div class="col-sm-8">
-                        <input type="file" id="inputPicture" name="picture">
+                        <input type="file" id="inputPicture" name="pictures[]" multiple="multiple">
                 </div>
             </div>
 

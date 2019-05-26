@@ -41,7 +41,7 @@
                 </div>
             </div>
 
-            <img class="card-img" src="..." alt="afbeelding -> todo">
+            <img class="card-img" src="{{$room['filename']}}" alt="{{$room->title}}">
 
             <div class="row justify-content-center">
                 <div class="col-sm-8">

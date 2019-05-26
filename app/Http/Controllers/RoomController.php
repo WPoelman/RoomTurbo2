@@ -29,6 +29,7 @@ class RoomController extends Controller
 
         foreach ($rooms as $room) {
             $room['owner'] = $room->owner->name;
+            $room['filename'] = DB::table('room_pictures')->where('room_id', $room['id'])->first()->filename;
         };
 
         // hier nog iets van pagination toevoegen
@@ -63,7 +64,7 @@ class RoomController extends Controller
 
         // Store pictures
         foreach ($room_data['pictures'] as $picture) {
-            $filename = $picture->store('pictures');
+            $filename = $picture->store('public');
             RoomPicture::create([
                 'room_id'   => $room_id,
                 'filename'  => $filename
@@ -110,20 +111,10 @@ class RoomController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Room $room, UploadPictureRequest $pictures)
+    public function update(UploadRoom $request, Room $room)
     {
 
-        $validated = $request->validate([
-            'title'         => 'required|max:255',
-            'description'   => 'required',
-            'size'          => 'required|integer|max:5000',
-            'price'         => 'required|integer|max:20000',
-            'type'          => 'required|max:255',
-            'zip_code'      => 'required|max:7',
-            'number'        => 'required|max:10'
-        ]);
-
-        $room->update($validated);
+        $room->update($request->validated());
 
         return redirect("/rooms")->with('success', 'Kamer is aangepast.');
     }

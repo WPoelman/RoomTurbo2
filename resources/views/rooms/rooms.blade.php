@@ -9,7 +9,7 @@
         @if($rooms)
             @foreach ($rooms as $room)
             <div class="card mb-3">
-                <img class="card-img-top" src="..." alt="afbeelding -> todo">
+                <img class="card-img-top" src="{{$room['filename']}}" alt="{{$room->title}}">
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-10">

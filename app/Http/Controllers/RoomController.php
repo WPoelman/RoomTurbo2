@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Requests\UploadPictureRequest;
-use App\Room, App\User, DB, Auth;
+use App\Http\Requests\UploadRoom;
+use App\Room, App\User, DB, Auth, \App\RoomPicture, Storage;
 
 class RoomController extends Controller
 {
@@ -51,21 +51,24 @@ class RoomController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UploadRoom $request)
     {
-        // validate data
-        $validated = $request->validate([
-            'title'         => 'required|max:255',
-            'description'   => 'required',
-            'size'          => 'required|integer|max:5000',
-            'price'         => 'required|integer|max:20000',
-            'type'          => 'required|max:255',
-            'zip_code'      => 'required|max:7',
-            'number'        => 'required|max:10'
-        ]);
 
-        // store data with id of user that created the room
-        Room::create($validated + ['owner_id' => Auth::id()]);
+        // Get the validated data
+        $room_data = $request->validated();
+
+        // Store form data with id of user that created the room and
+        // get the id of the room that was just created
+        $room_id = Room::create($room_data + ['owner_id' => Auth::id()])->id;
+
+        // Store pictures
+        foreach ($room_data['pictures'] as $picture) {
+            $filename = $picture->store('pictures');
+            RoomPicture::create([
+                'room_id'   => $room_id,
+                'filename'  => $filename
+            ]);
+        }
 
         return redirect('/rooms')->with('success', 'Kamer is toegevoegd.');
     }
@@ -110,8 +113,6 @@ class RoomController extends Controller
     public function update(Request $request, Room $room, UploadPictureRequest $pictures)
     {
 
-        dd($pictures);
-
         $validated = $request->validate([
             'title'         => 'required|max:255',
             'description'   => 'required',
@@ -136,7 +137,13 @@ class RoomController extends Controller
     public function destroy($id)
     {
 
-        Room::findOrFail($id)->delete();
+        // First find the room and the pictures from that room
+        $room = Room::findOrFail($id);
+        $picture_filenames = DB::table('room_pictures')->where('room_id', $id)->pluck('filename');
+
+        // Then delete both the db entries and the picture files
+        $room->delete();
+        Storage::delete($picture_filenames->all());
 
         return redirect("/rooms")->with('success', 'Kamer is verwijderd!');
     }

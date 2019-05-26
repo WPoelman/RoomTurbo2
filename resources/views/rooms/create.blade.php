@@ -59,9 +59,9 @@
             </div>
 
             <div class="form-group row">
-                <label for="inputPicture" class="col-sm-2 col-form-label">Afbeelding(en) toevoegen (niet groter dan 2mb)</label>
+                <label for="inputPicture" class="col-sm-2 col-form-label">Afbeelding(en) toevoegen</label>
                 <div class="col-sm-8">
-                        <input type="file" id="inputPicture" name="pictures[]" multiple="multiple">
+                        <input type="file" id="inputPicture" name="pictures[]" multiple="multiple"><small>(niet groter dan 4mb) ** php.ini max staat op 10 foto's **</small>
                 </div>
             </div>
 

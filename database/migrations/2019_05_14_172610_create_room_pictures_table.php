@@ -15,11 +15,11 @@ class CreateRoomPicturesTable extends Migration
     {
         Schema::create('room_pictures', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('room_id')->unsigned();
+            $table->bigInteger('room_id')->unsigned();
             $table->string('filename');
             $table->timestamps();
 
-            $table->foreign('room_id')->references('id')->on('rooms');
+            $table->foreign('room_id')->references('id')->on('rooms')->onDelete('cascade');
         });
     }
 

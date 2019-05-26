@@ -19,7 +19,7 @@ class Room extends Model
     ];
 
     /**
-     * A room has one owner, an owner can have many rooms
+     * A room has one owner, an owner can have many rooms.
      *
      * @return user collection
      */

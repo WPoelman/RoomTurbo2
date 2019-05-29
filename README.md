@@ -18,7 +18,7 @@ Voor het vak 'Database-driven Webtechnology' (Rijksuniversiteit Groningen - Info
 #### Prioriteit
 * Profielpagina die public is en waar je de kamers van die specifieke verhuurder kunt zien.
 * Kunnen reageren op een kamer als een huurder en die berichten zien op het dashboard.
-* Afbeeldingen kunnen uploaden / aanpassen / verwijderen (placeholder maken).
+*  <strike>Afbeeldingen kunnen uploaden / aanpassen / verwijderen</strike>(placeholder maken).
 * Client-side input validatie (jQuery) + errors.
 * API toevoegen waarmee informatie over de kamers opgehaald kan worden.
 

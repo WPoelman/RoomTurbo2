@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\UpdateUser;
 use Illuminate\Validation\Rule;
 use \App\Room;
 use \App\User;
@@ -30,6 +30,7 @@ class HomeController extends Controller
         $owner_id = Auth::id();
         $rooms = Room::where('owner_id', '=', $owner_id)->get();
         $owner = User::findOrFail($owner_id);
+
         return view('auth.home', compact('rooms', 'owner'));
     }
 
@@ -55,17 +56,10 @@ class HomeController extends Controller
       * @param  \Illuminate\Http\Request  $request
       * @return \Illuminate\Http\Response
       */
-     public function update(Request $request)
+     public function update(UpdateUser $request)
      {
-         $user_id = Auth::id();
 
-         $validated = $request->validate([
-            'name'      => ['required', 'string', 'max:255'],
-            'email'     => ['required', 'string', 'email', 'max:255',
-                            Rule::unique('users')->ignore($user_id)]
-         ]);
-
-         User::find($user_id)->update($validated);
+         User::find(Auth::id())->update($request->validated());
 
          return redirect("/home")->with('success', 'Account is aangepast.');
      }
@@ -80,6 +74,7 @@ class HomeController extends Controller
     {
         User::findOrFail(Auth::user()->id)->delete();
         Auth::logout();
+
         return redirect("/rooms")->with('success', 'Account is verwijderd.');
     }
 
@@ -92,6 +87,7 @@ class HomeController extends Controller
     public function password()
     {
         Auth::logout();
+
         return redirect("/password/reset");
     }
 }

@@ -96,10 +96,6 @@ class RoomController extends Controller
      */
     public function edit(Room $room)
     {
-        // todo check hoe show Room instance error meegegeven kan worden
-        if (!$room){
-            return redirect('/rooms')->with('error', 'Kamer niet gevonden of niet geautoriseerd! Log in of zoek op het goede kamer nummer.');
-        }
 
         return view('rooms.edit', compact('room'));
     }

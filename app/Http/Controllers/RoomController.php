@@ -29,7 +29,7 @@ class RoomController extends Controller
 
         foreach ($rooms as $room) {
             $room['owner'] = $room->owner->name;
-            $room['filename'] = DB::table('room_pictures')->where('room_id', $room['id'])->first()->filename;
+            $room['filename'] = DB::table('room_pictures')->where('room_id', $room['id'])->take(1)->value('filename');
         };
 
         // hier nog iets van pagination toevoegen
@@ -64,7 +64,8 @@ class RoomController extends Controller
 
         // Store pictures
         foreach ($room_data['pictures'] as $picture) {
-            $filename = $picture->store('public');
+            $filename = Storage::disk('rooms_pictures')->put('', $picture);
+            // $filename = $picture->store('public');
             RoomPicture::create([
                 'room_id'   => $room_id,
                 'filename'  => $filename
@@ -84,6 +85,7 @@ class RoomController extends Controller
     {
 
         $room['owner'] = $room->owner->name;
+        $room['filename'] = DB::table('room_pictures')->where('room_id', $room['id'])->value('filename');
 
         return view('rooms.show', compact('room'));
     }

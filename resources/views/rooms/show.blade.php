@@ -10,6 +10,7 @@
                 <h1 class="card-title">{{$room->title}}</h1>
                 <p class="card-text"><small class="text-muted">Geplaatst: {{substr($room->created_at, 0, 10)}} door {{$room->owner}}</small></p>
             </div>
+            <img class="card-img mb-4" src="{{asset("rooms_pictures/".$room->filename)}}" alt="{{$room->title}}" title="{{$room->title}}">
             <div class="row">
                 <div class="col-sm-3">
                     <div class="card">
@@ -40,10 +41,7 @@
                     </div>
                 </div>
             </div>
-
-            <img class="card-img" src="{{$room['filename']}}" alt="{{$room->title}}">
-
-            <div class="row justify-content-center">
+            <div class="row justify-content-center mt-4">
                 <div class="col-sm-8">
                     <div class="card mb-3">
                         <div class="card-body">
@@ -56,7 +54,7 @@
                     <button type="button" class="btn btn-info @guest disabled @endguest ">Stuur een bericht!</button>
                     @guest <small> Log in om een bericht te sturen.</small> @endguest
 
-                    @if(Auth::id() == $room['owner_id'])
+                    @if(Auth::id() == $room->owner_id)
                         <a class="btn btn-warning mt-4" href="/rooms/{{$room->id}}/edit">Advertentie aanpassen</a>
                     @endif
                 </div>

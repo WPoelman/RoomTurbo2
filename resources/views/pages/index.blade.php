@@ -8,7 +8,6 @@
     <h4> Dit zijn recent toegevoegde kamers: </h4>
     @foreach ($rooms as $room)
     <div class="card mb-3">
-        <img class="card-img-top" src="..." alt="afbeelding -> todo">
         <div class="card-body">
             <div class="row">
                 <div class="col-md-10">
